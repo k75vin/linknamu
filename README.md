@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 링크나무
 
-## Getting Started
+Linktree처럼 내 모든 링크를 한 페이지에 모아두고 하나의 URL로 공유하는 서비스입니다.
 
-First, run the development server:
+## 시작하기
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. 의존성 설치
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   npm install
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. 환경 변수 설정
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   `.env.local` 파일에 MongoDB Atlas 연결 정보를 입력합니다 (커밋되지 않습니다).
 
-## Learn More
+   ```
+   MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>/?retryWrites=true&w=majority
+   MONGODB_DB=linknamu
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+   `MONGODB_URI`가 비어 있으면 링크 클릭 수 집계만 건너뛰고, 나머지 기능(프로필, 링크 카드, 다크모드)은 정상 동작합니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. 개발 서버 실행
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+   [http://localhost:3000](http://localhost:3000) 에서 확인할 수 있습니다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 프로필 · 링크 편집
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[src/lib/site-config.ts](src/lib/site-config.ts) 에서 프로필 정보와 링크 목록을 수정합니다.
+
+## 기술 스택
+
+- Next.js (App Router)
+- Tailwind CSS
+- MongoDB Atlas (클릭 수 저장)
+- Vercel (배포)
+
+## 배포
+
+[Vercel](https://vercel.com/new) 에 연결한 뒤, 프로젝트 설정의 Environment Variables에 `MONGODB_URI`(와 필요 시 `MONGODB_DB`)를 등록합니다.
