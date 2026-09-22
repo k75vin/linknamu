@@ -1,9 +1,8 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { getDb } from "@/lib/mongodb";
 
-export async function recordLinkClick(linkId: string, href: string) {
+export async function recordLinkClick(linkId: string) {
   try {
     const db = await getDb();
     await db
@@ -16,6 +15,4 @@ export async function recordLinkClick(linkId: string, href: string) {
   } catch (error) {
     console.error(`Failed to record click for "${linkId}":`, error);
   }
-
-  redirect(href);
 }

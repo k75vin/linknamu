@@ -1,3 +1,5 @@
+"use client";
+
 import { recordLinkClick } from "@/lib/actions";
 
 type LinkCardProps = {
@@ -7,16 +9,19 @@ type LinkCardProps = {
 };
 
 export function LinkCard({ id, label, href }: LinkCardProps) {
-  const trackAndRedirect = recordLinkClick.bind(null, id, href);
+  const isExternal = href.startsWith("http://") || href.startsWith("https://");
 
   return (
-    <form action={trackAndRedirect} className="w-full">
-      <button
-        type="submit"
-        className="flex w-full items-center justify-center rounded-xl border border-zinc-200 bg-white px-5 py-4 text-sm font-medium text-zinc-900 shadow-sm transition-colors hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-50 dark:hover:bg-zinc-800"
-      >
-        {label}
-      </button>
-    </form>
+    <a
+      href={href}
+      onClick={() => {
+        recordLinkClick(id);
+      }}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
+      className="flex w-full items-center justify-center rounded-2xl border border-white/60 bg-white/50 px-5 py-4 text-sm font-medium text-[#2b2320] shadow-[0_8px_20px_-10px_rgba(146,84,34,0.35)] backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/70 hover:shadow-[0_12px_24px_-10px_rgba(146,84,34,0.45)] dark:border-white/10 dark:bg-white/5 dark:text-[#f3ece5] dark:hover:bg-white/10"
+    >
+      {label}
+    </a>
   );
 }
